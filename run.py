@@ -18,7 +18,14 @@ url = base_url + '/stock/{symbol}/advanced-stats'
 
 # Stocks that we want the data for
 stocks = ['SILV', 'AYA', 'MAG', 'FR', 'SVM', 'EDR', 'PAAS', 'HL', 'FRES', 'FVI', 'CDE', 'WPM', 'MMX', 'SSL']
+base_url = 'https://cloud.iexapis.com/stable/stock'
 
+
+df = pd.from_csv('silver-data.csv')
+if df.empty:
+    print('DataFrame is empty')
+
+# We want to dump any none empty dataframe to the csv and load it on next run.
 
 def get_data_for_stocks(stocks):
     # Iterate over stocks -- throw error if unable to get data
@@ -29,7 +36,7 @@ def get_data_for_stocks(stocks):
 
 def make_url(stock, endpoint):
     # Include API token
-    return f'https://cloud.iexapis.com/stable/stock/{stock}/{endpoint}'
+    return f'{base_url}/{stock}/{endpoint}'
 
 
 def get_advanced_stats(stock):
@@ -111,12 +118,11 @@ def dump_to_excel(df):
 
 
 # ----- Followup -----
-# By HAND:
-# Mill Data - Getting the product to market
+# ----- By hand -----
+# Mill Data - Getting the product to market -- if they have biggest mine but no mine they will not succeed.
 # Black-Scholes Model  = calculate the discounted net present value of all mines + option value of the minues as shown by the formula
 # Enterprise Value per Resource -- Get Resource amounts off of the websites
-# Total Acquisition Cost (TAC)
-
+# See https://corporatefinanceinstitute.com/resources/knowledge/modeling/monthly-cash-flow-forecast-model/ for ideas for cash flow forecasting
 
 if __name__ == '__main__':
     df = pd.DataFrame()

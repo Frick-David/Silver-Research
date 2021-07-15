@@ -1,3 +1,4 @@
 # Python files to ignore
 api_key.py
+config.py
 __pycache__
